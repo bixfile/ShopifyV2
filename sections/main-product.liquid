@@ -1,0 +1,105 @@
+{% comment %}
+  Main Product Section - Product detail page
+{% endcomment %}
+
+<section class="product" data-section-id="{{ section.id }}" data-section-type="product">
+  <div class="product__wrapper">
+    <div class="product__media">
+      {% if product.featured_media %}
+        <div class="product__media-wrapper">
+          {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', class: 'product__image' }}
+        </div>
+      {% endif %}
+      
+      {% if product.media.size > 1 %}
+        <div class="product__media-list">
+          {% for media in product.media %}
+            <div class="product__media-item">
+              {{ media | image_url: width: 200 | image_tag: loading: 'lazy' }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="product__info">
+      <h1 class="product__title">{{ product.title }}</h1>
+      
+      <div class="product__price">
+        <span class="price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="price--compare">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+
+      {% if product.description != blank %}
+        <div class="product__description rte">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+      {% form 'product', product, id: 'product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <div class="product__option">
+              <label for="Option-{{ option.position }}">{{ option.name }}</label>
+              <select 
+                id="Option-{{ option.position }}"
+                name="options[{{ option.name | escape }}]"
+                class="product__option-select"
+              >
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                    {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        <div class="product__quantity">
+          <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+          <input 
+            type="number" 
+            id="Quantity" 
+            name="quantity" 
+            value="1" 
+            min="1"
+            class="product__quantity-input"
+          >
+        </div>
+
+        <button
+          type="submit"
+          name="add"
+          class="product__submit button"
+          {% unless product.available %}disabled{% endunless %}
+        >
+          {% if product.available %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "Enable video looping",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
+

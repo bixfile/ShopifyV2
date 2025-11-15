@@ -1,0 +1,22 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "refresh_page": "Choosing a selection results in a full page refresh."
+    }
+  },
+  "sections": {
+    "cart": {
+      "cart_error": "There was an error updating your cart",
+      "quantity_error": "You can only add [quantity] of this item to your cart"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    }
+  }
+}
+

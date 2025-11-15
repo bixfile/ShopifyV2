@@ -1,0 +1,22 @@
+{
+  "current": {
+    "colors_text": "#121212",
+    "colors_background": "#FFFFFF",
+    "colors_accent": "#000000",
+    "type_header_font": "assistant_n4",
+    "type_body_font": "assistant_n4",
+    "page_width": 1200,
+    "cart_type": "drawer",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    }
+  }
+}
+
